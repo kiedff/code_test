@@ -12,5 +12,12 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
+//= require jquery
+//= require jquery_ujs
 //= require_tree .
+$(function(){
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 55.890, lng: -4.294},
+    zoom: 10
+  });
+});
