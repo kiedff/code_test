@@ -16,8 +16,25 @@
 //= require jquery_ujs
 //= require_tree .
 $(function(){
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 55.890, lng: -4.294},
+  var lat = 55.890
+  var lng = -4.294
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    renderMap(lat,lng)
+  }
+});
+
+function showPosition(position) {
+  renderMap(position.coords.latitude,position.coords.longitude)
+}
+
+function renderMap(lat, lng) {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: lat, lng: lng},
     zoom: 10
   });
-});
+
+  // addMarkers(map)
+}
