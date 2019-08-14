@@ -48,7 +48,10 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'binding_of_caller'
   gem 'better_errors'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
   gem 'rspec-rails'
+
 end
 
 group :development do
