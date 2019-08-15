@@ -14,9 +14,17 @@
  */
 
  @import "bootstrap";
+ @import "font-awesome";
 
- html, body, #map {
+ html, body{
   height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+ }
+
+ #map {
+  height: 98%;
   width: 100%;
   margin: 0px;
   padding: 0px;
@@ -28,4 +36,17 @@
  nav {
   height: 40px;
   background-color: #000000;
+ }
+
+
+.search {
+  float: right;
+  margin: 5px;
+ }
+
+ .logo {
+  height: 40px;
+  width: 40px;
+  background-color: #ffffff;
+  display: inline-block;
  }

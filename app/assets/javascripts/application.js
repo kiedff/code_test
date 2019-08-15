@@ -32,9 +32,9 @@ $(function(){
     }
   });
 
-  $('#photoUpload').click(function(e){
+  $('#searchForm').submit(function(e){
     e.preventDefault()
-    displayForm()
+    var coordinates = getCoordinates($('#seachTextbox').val());
   })
 });
 
@@ -48,7 +48,6 @@ function renderMap(lat, lng) {
     center: {lat: lat, lng: lng},
     zoom: 10
   });
-
   addMarkers(map)
 }
 
@@ -67,7 +66,6 @@ function addMarkers(map) {
 }
 
 function updateMarkers(map,markers){
-
   var i, marker, contentString;
 
   for (i=0; i<markers.length; i++){
@@ -88,6 +86,12 @@ function updateMarkers(map,markers){
       }
     })(marker, i));
 
+    // zoom_changed
+
+    map.addListener('bounds_changed', function() {
+        console.log(map.getBounds().getNorthEast())
+      });
+
     google.maps.event.addListener(marker, 'mouseout', (function(marker, i) {
       return function() {
         infowindow.close(map, marker);
@@ -96,28 +100,33 @@ function updateMarkers(map,markers){
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
       return function() {
-          $("#modal-window").find(".modal-content").html("<img src='"+markers[i].image.full.url+"'/>");
+          $("#modal-window").find(".modal-content").html("<img src='"+markers[i].image.full.url+"'/><button class=\"btn btn-default\" data-dismiss=\"modal\" aria-hidden=\"true\">Close</button>");
           $("#modal-window").modal();
       }
     })(marker, i));
   }
 }
 
-function displayForm() {
-  // var htmlString = '/app/views/photos/_new.html';
-  // $('.modal-content').html(htmlString);
+function getCoordinates(query){
+  $.getJSON( {
+      url  : 'https://maps.googleapis.com/maps/api/geocode/json',
+      data : {
+          sensor  : false,
+          address : query,
+          key: 'AIzaSyAVI5OeqKWBBPxInEtlQmENnm50qqjS8ZA'
+      },
+      success : function( data, textStatus ) {
+        if(data.status === 'OK'){
+          console.log(data)
+          renderMap(data.results[0].geometry.location.lat,data.results[0].geometry.location.lng)
+        } else {
+          errorModal('No results found')
+        }
+      }
+  } );
+}
 
-
-  $.get('photos/new.html', function(content) {
-      $('.modal-content').html(content);
-  });
-
-
-  $('.modal').addClass('is-visible');
-
-  $('#new_photo').submit(function(e){
-    e.preventDefault()
-
-    console.log($('#new_photo'))
-  })
+function errorModal(errorString){
+  $("#modal-window").find(".modal-content").html("<div class=\"modal-body\"><h4>'"+errorString+"'<h4/></div><div class='modal-footer'><button class='btn btn-danger' data-dismiss='modal' aria-hidden='true'>Close</button></div>");
+  $("#modal-window").modal();
 }

@@ -12,7 +12,14 @@
 
   <body>
     <nav>
+      <div class="logo"><%=image_tag("ufo.png", size: '40x40')%></div>
       <%= link_to "Add photo", new_photo_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
+      <div class="search">
+        <form id="searchForm">
+          <input type="text" id="seachTextbox" placeholder="Search Location.." name="search">
+          <button type="submit" id="placeSearch"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
     </nav>
     <%= yield %>
   </body>
