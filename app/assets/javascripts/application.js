@@ -19,11 +19,19 @@ $(function(){
   var lat = 55.890;
   var lng = -4.294;
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    renderMap(lat,lng);
-  }
+  // don't bother waiting on permissions becuase change function doesn't work
+  navigator.permissions.query({name:'geolocation'}).then(function(result) {
+    if (result.state === 'granted') {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      renderMap(lat,lng);
+    }
+  });
+
+  $('#photoUpload').click(function(e){
+    e.preventDefault()
+    displayForm()
+  })
 });
 
 function showPosition(position) {
@@ -80,6 +88,24 @@ function updateMarkers(map,markers){
         infowindow.close(map, marker);
       }
     })(marker, i));
-  }
 
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+          $('.modal-content').html("<img src='"+markers[i].image.full.url+"'/>")
+          $('.modal').toggleClass('is-visible');
+         
+          $('.modal-overlay').click(function(){
+            $('.modal').removeClass('is-visible');
+          });
+
+          $('.modal-close').click(function(){
+            $('.modal').removeClass('is-visible');
+          });
+      }
+    })(marker, i));
+  }
+}
+
+function displayForm() {
+  
 }
