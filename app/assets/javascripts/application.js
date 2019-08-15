@@ -14,7 +14,11 @@
 //= require activestorage
 //= require jquery
 //= require jquery_ujs
+//= require popper
+//= require turbolinks
+//= require bootstrap
 //= require_tree .
+
 $(function(){
   var lat = 55.890;
   var lng = -4.294;
@@ -35,6 +39,7 @@ $(function(){
 });
 
 function showPosition(position) {
+  console.log(position.coords.latitude,position.coords.longitude)
   renderMap(position.coords.latitude,position.coords.longitude)
 }
 
@@ -91,21 +96,28 @@ function updateMarkers(map,markers){
 
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
       return function() {
-          $('.modal-content').html("<img src='"+markers[i].image.full.url+"'/>")
-          $('.modal').toggleClass('is-visible');
-         
-          $('.modal-overlay').click(function(){
-            $('.modal').removeClass('is-visible');
-          });
-
-          $('.modal-close').click(function(){
-            $('.modal').removeClass('is-visible');
-          });
+          $("#modal-window").find(".modal-content").html("<img src='"+markers[i].image.full.url+"'/>");
+          $("#modal-window").modal();
       }
     })(marker, i));
   }
 }
 
 function displayForm() {
-  
+  // var htmlString = '/app/views/photos/_new.html';
+  // $('.modal-content').html(htmlString);
+
+
+  $.get('photos/new.html', function(content) {
+      $('.modal-content').html(content);
+  });
+
+
+  $('.modal').addClass('is-visible');
+
+  $('#new_photo').submit(function(e){
+    e.preventDefault()
+
+    console.log($('#new_photo'))
+  })
 }

@@ -12,7 +12,7 @@
 
   <body>
     <nav>
-      <a href="" id="photoUpload">Add Photo</a>
+      <%= link_to "Add photo", new_photo_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
     </nav>
     <%= yield %>
   </body>
