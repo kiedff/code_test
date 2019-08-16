@@ -28,7 +28,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'bootstrap', '~> 4.0.0'
 gem "font-awesome-rails"
-gem 'fog-aws'
+gem 'fog'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
