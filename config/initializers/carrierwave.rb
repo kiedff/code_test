@@ -1,11 +1,12 @@
 CarrierWave.configure do |config|
-  config.storage    =  :aws                  # required
-  config.aws_bucket =  ENV['S3_BUCKET']      # required
-  config.aws_acl    =  :public_read
+  config.storage = Rails.env.production? ? :fog : :file
 
-  config.aws_credentials = {
-    access_key_id:      ENV['AWS_ACCESS_KEY_ID'],       # required
-    secret_access_key:  ENV['AWS_SECRET_ACCESS_KEY'],     # required
-    region: 'eu-west-2'
+  config.fog_credentials = {
+    :provider  => 'AWS',  # required
+    :aws_access_key_id  => ENV['AWS_ACCESS_KEY_ID'],  # required
+    :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],  # required
+    :region => 'eu-west-2',  # optional, defaults to 'us-east-1'
   }
+  config.fog_directory  = ENV['S3_BUCKET']  # required
+  config.fog_public  = false  # optional, defaults to true
 end
