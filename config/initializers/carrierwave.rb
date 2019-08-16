@@ -8,9 +8,4 @@ CarrierWave.configure do |config|
     secret_access_key:  ENV['AWS_SECRET_ACCESS_KEY'],     # required
     region: 'eu-west-2'
   }
-
-  config.aws_attributes = {
-    'Cache-Control'=>"max-age=#{365.day.to_i}",
-    'Expires'=>'Tue, 29 Dec 2015 23:23:23 GMT'
-  }
 end
