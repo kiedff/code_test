@@ -8,10 +8,11 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application'%>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVI5OeqKWBBPxInEtlQmENnm50qqjS8ZA" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body>
-    <nav>
+    <div class=".navbar-nav" id="navbar">
       <div class="logo"><%=image_tag("ufo.png", size: '40x40')%></div>
       <%= link_to "Add photo", new_photo_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
       <div class="search">
@@ -20,7 +21,7 @@
           <button type="submit" id="placeSearch"><i class="fa fa-search"></i></button>
         </form>
       </div>
-    </nav>
+    </div>
     <% if flash[:notice] %>
       <div class="notice"><%= flash[:notice] %></div>
     <% end %>
