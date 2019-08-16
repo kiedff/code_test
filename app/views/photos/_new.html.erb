@@ -7,13 +7,10 @@
 
         <table>
           <tbody>
+           
             <tr>
-              <td> <label>Latitude</label></td>
-              <td><%= f.number_field :lat, step: :any, required: true %></td>
-            </tr>
-            <tr>
-              <td><label>longitude</label></td>
-              <td><%= f.number_field :lng, step: :any, required: true %></td>
+              <td><label>Location</label></td>
+              <td><%= text_field_tag 'location', nil, placeholder: 'Town, City, Postcode...', required: true%></td>
             </tr>
             <tr>
               <td><label>Photo</label></td>
@@ -26,10 +23,12 @@
           <tbody>
             <tr>
               <td><button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button></td>
-              <td><%= f.submit "Submit", class: "btn btn-primary"%></td>
+              <td><%= f.submit "Submit", class: "btn btn-primary", id: 'test'%></td>
             </tr>
           </tbody>
         </table>
+        <%= f.hidden_field :lat, value: "" %>
+        <%= f.hidden_field :lng, value: ""  %>
      <% end %>
   </div>
 </div>

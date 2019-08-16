@@ -33,13 +33,21 @@ $(function(){
   });
 
   $('#searchForm').submit(function(e){
-    e.preventDefault()
-    var coordinates = getCoordinates($('#seachTextbox').val());
+    e.preventDefault();
+    getCoordinates($('#seachTextbox').val(),renderMap);
   })
+
+  //geocoding location
+  $(document).on('submit','#new_photo',function(e){
+    e.preventDefault();
+    getCoordinates($("#location").val(),uploadPhoto);
+  })
+
+  setTimeout(function(){ $('.notice').hide() }, 3000);
+      
 });
 
 function showPosition(position) {
-  console.log(position.coords.latitude,position.coords.longitude)
   renderMap(position.coords.latitude,position.coords.longitude)
 }
 
@@ -86,11 +94,9 @@ function updateMarkers(map,markers){
       }
     })(marker, i));
 
-    // zoom_changed
-
-    map.addListener('bounds_changed', function() {
-        console.log(map.getBounds().getNorthEast())
-      });
+    // map.addListener('bounds_changed', function() {
+    //     console.log(map.getBounds().getNorthEast())
+    //   });
 
     google.maps.event.addListener(marker, 'mouseout', (function(marker, i) {
       return function() {
@@ -107,26 +113,34 @@ function updateMarkers(map,markers){
   }
 }
 
-function getCoordinates(query){
+function getCoordinates(query, successFunction){
+
   $.getJSON( {
-      url  : 'https://maps.googleapis.com/maps/api/geocode/json',
-      data : {
-          sensor  : false,
-          address : query,
-          key: 'AIzaSyAVI5OeqKWBBPxInEtlQmENnm50qqjS8ZA'
-      },
-      success : function( data, textStatus ) {
-        if(data.status === 'OK'){
-          console.log(data)
-          renderMap(data.results[0].geometry.location.lat,data.results[0].geometry.location.lng)
-        } else {
-          errorModal('No results found')
-        }
+    url  : 'https://maps.googleapis.com/maps/api/geocode/json',
+    data : {
+        sensor  : false,
+        address : query,
+        key: 'AIzaSyAVI5OeqKWBBPxInEtlQmENnm50qqjS8ZA'
+    },
+    success : function( data, textStatus ) {
+      if(data.status === 'OK'){
+        successFunction(data.results[0].geometry.location.lat,data.results[0].geometry.location.lng)
+      } else {
+
+        errorModal('Could not find the location provided')
       }
-  } );
+    }
+  });
 }
 
 function errorModal(errorString){
-  $("#modal-window").find(".modal-content").html("<div class=\"modal-body\"><h4>'"+errorString+"'<h4/></div><div class='modal-footer'><button class='btn btn-danger' data-dismiss='modal' aria-hidden='true'>Close</button></div>");
+  $("#modal-window").find(".modal-content").html("<div class=\"modal-body\"><h4>"+errorString+"<h4/></div><div class='modal-footer'><button class='btn btn-danger' data-dismiss='modal' aria-hidden='true'>Close</button></div>");
   $("#modal-window").modal();
+}
+
+function uploadPhoto(lat,lng){
+  $('#photo_lat').val(lat);
+  $('#photo_lng').val(lng);
+  $(document).unbind('submit');
+  $('#new_photo').submit()
 }

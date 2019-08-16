@@ -15,12 +15,13 @@ class PhotosController < ApplicationController
 
   def create
     @photo = Photo.create(photo_params)
+
     if @photo.save
       flash[:notice] = 'Successfully added photo'
       redirect_to :root
     else
-      flash[:error] = 'Unable to add photo'
-      redirect_to :back
+      flash[:alert] = 'Unable to add photo'
+      redirect_to :root
     end
   end
 
