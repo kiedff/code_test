@@ -53,7 +53,7 @@ function showPosition(position) {
 function renderMap(lat, lng) {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: lat, lng: lng},
-    zoom: 10
+    zoom: 8
   });
   addMarkers(map)
 }
