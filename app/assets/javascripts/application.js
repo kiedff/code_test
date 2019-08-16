@@ -44,7 +44,6 @@ $(function(){
   })
 
   setTimeout(function(){ $('.notice').hide() }, 3000);
-      
 });
 
 function showPosition(position) {
@@ -93,10 +92,6 @@ function updateMarkers(map,markers){
         infowindow.open(map, marker);
       }
     })(marker, i));
-
-    // map.addListener('bounds_changed', function() {
-    //     console.log(map.getBounds().getNorthEast())
-    //   });
 
     google.maps.event.addListener(marker, 'mouseout', (function(marker, i) {
       return function() {

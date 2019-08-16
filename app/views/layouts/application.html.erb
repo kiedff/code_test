@@ -16,7 +16,7 @@
       <%= link_to "Add photo", new_photo_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
       <div class="search">
         <form id="searchForm">
-          <input type="text" id="seachTextbox" placeholder="Search Location.." name="search">
+          <input type="text" id="seachTextbox" placeholder="Search Location.." name="search" required>
           <button type="submit" id="placeSearch"><i class="fa fa-search"></i></button>
         </form>
       </div>
