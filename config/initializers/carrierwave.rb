@@ -1,5 +1,5 @@
 CarrierWave.configure do |config|
-  config.storage = Rails.env.production? ? :fog : :file
+  config.storage = Rails.env.production? ? 'fog/aws' : :file
   config.fog_directory  = ENV['S3_BUCKET']  # required
   config.fog_public  = false  # optional, defaults to true
 
