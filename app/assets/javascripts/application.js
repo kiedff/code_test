@@ -35,7 +35,7 @@ $(function(){
   } else {
     renderMap(lat,lng);
   }
-  
+
   $('#searchForm').submit(function(e){
     e.preventDefault();
     getCoordinates($('#seachTextbox').val(),renderMap);
@@ -119,7 +119,7 @@ function getCoordinates(query, successFunction){
     data : {
         sensor  : false,
         address : query,
-        key: 'AIzaSyAVI5OeqKWBBPxInEtlQmENnm50qqjS8ZA'
+        key: $('meta[name="api-key"]').attr('content')
     },
     success : function( data, textStatus ) {
       if(data.status === 'OK'){

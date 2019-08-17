@@ -7,11 +7,12 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application'%>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVI5OeqKWBBPxInEtlQmENnm50qqjS8ZA" type="text/javascript"></script>
+    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_API_KEY']}"%>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   </head>
 
   <body>
+    <%= tag :meta, name: "api-key", content: ENV['GOOGLE_API_KEY'] %>
     <div class=".navbar-nav" id="navbar">
       <div class="logo"><%=image_tag("ufo.png", size: '40x40')%></div>
       <%= link_to "Add photo", new_photo_path,  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'}  %>
