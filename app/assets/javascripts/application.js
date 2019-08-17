@@ -23,15 +23,19 @@ $(function(){
   var lat = 55.890;
   var lng = -4.294;
 
-  // don't bother waiting on permissions becuase change function doesn't work
-  navigator.permissions.query({name:'geolocation'}).then(function(result) {
-    if (result.state === 'granted') {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      renderMap(lat,lng);
-    }
-  });
-
+  // check if can obtain user location and render map
+  if(jQuery.type(navigator.permissions) !== "undefined") {
+    navigator.permissions.query({name:'geolocation'}).then(function(result) {
+      if (result.state === 'granted') {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        renderMap(lat,lng);
+      }
+    });
+  } else {
+    renderMap(lat,lng);
+  }
+  
   $('#searchForm').submit(function(e){
     e.preventDefault();
     getCoordinates($('#seachTextbox').val(),renderMap);
