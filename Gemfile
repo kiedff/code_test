@@ -26,7 +26,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'carrierwave'
 gem 'rmagick'
-gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap', '~> 4.3.1'
 gem "font-awesome-rails"
 gem 'fog-aws', group: :production
 # Use Redis adapter to run Action Cable in production
